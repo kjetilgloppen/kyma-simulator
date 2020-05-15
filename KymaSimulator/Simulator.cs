@@ -11,7 +11,11 @@ namespace KymaSimulator
         public Simulator()
         {
             _dataLoggerSimulator = new DataLoggerSimulator();
-            _serialPort = new SerialPort {PortName = "COM4"};
+            _serialPort = new SerialPort
+            {
+                PortName = "COM4", 
+                NewLine = "\r\n"
+            };
             _serialPort.DataReceived += DataReceived;
         }
 
