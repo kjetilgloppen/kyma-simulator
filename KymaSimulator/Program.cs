@@ -11,7 +11,7 @@ namespace KymaSimulator
         private static void Main()
         {
             Console.WriteLine("--- Kyma Simulator ---");
-            Console.WriteLine("Press Q to quit, any other key to show counter values");
+            Console.WriteLine("Press Q to quit, D to show time diff, T to show elapsed time, any other key to show counter values");
             _simulator = new Simulator();
 
             _startTime = DateTime.UtcNow;
@@ -33,6 +33,9 @@ namespace KymaSimulator
             {
                 case ConsoleKey.Q: 
                     return false;
+                case ConsoleKey.D:
+                    Log.Debug($"Timing difference: {_simulator.DataLogger.GetTimeDifference():P}");
+                    break;
                 case ConsoleKey.T:
                     var elapsed = DateTime.UtcNow - _startTime;
                     Log.Debug($"Elapsed {elapsed.TotalSeconds:#.000} (0x{Convert.ToInt32(elapsed.TotalSeconds):X8}) sec since start {_startTime.ToLocalTime():HH:mm:ss.fff}");

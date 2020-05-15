@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Timers;
 
 namespace KymaSimulator
@@ -19,9 +20,9 @@ namespace KymaSimulator
 
         private void Elapsed(object sender, ElapsedEventArgs e)
         {
-            var elapsed = _stopwatch.ElapsedMilliseconds;
+            var elapsed = (decimal)_stopwatch.ElapsedTicks / (TimeSpan.TicksPerMillisecond);
             _stopwatch.Restart();
-            _counterSimulator.UpdateValues(elapsed);
+            _counterSimulator.UpdateValues(_timer.Interval, elapsed);
         }
 
         public void Start()
@@ -33,6 +34,11 @@ namespace KymaSimulator
         public string GetCounterString()
         {
             return _counterSimulator.GetCounterString();
+        }
+
+        public decimal GetTimeDifference()
+        {
+            return _counterSimulator.TimeDifference;
         }
     }
 }

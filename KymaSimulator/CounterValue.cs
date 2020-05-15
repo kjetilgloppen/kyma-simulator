@@ -18,7 +18,7 @@ namespace KymaSimulator
             _internalValue = initialValue;
         }
 
-        public void UpdateValue(long elapsedMilliseconds)
+        public void UpdateValue(decimal elapsedMilliseconds)
         {
             _internalValue += _internalRate * elapsedMilliseconds;
         }
