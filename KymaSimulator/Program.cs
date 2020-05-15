@@ -18,7 +18,7 @@ namespace KymaSimulator
             Log.Debug("Starting...");
             _simulator.Start();
 
-            Log.Debug(_simulator.GetCounterValues());
+            Log.Debug(_simulator.DataLogger.GetCounterString());
             do
             {
             } while (HandleInput(Console.ReadKey(true)));
@@ -38,7 +38,7 @@ namespace KymaSimulator
                     Log.Debug($"Elapsed {elapsed.TotalSeconds:#.000} (0x{Convert.ToInt32(elapsed.TotalSeconds):X8}) sec since start {_startTime.ToLocalTime():HH:mm:ss.fff}");
                     break;
             }
-            Log.Debug(_simulator.GetCounterValues());
+            Log.Debug(_simulator.DataLogger.GetCounterString());
             return true;
         }
     }

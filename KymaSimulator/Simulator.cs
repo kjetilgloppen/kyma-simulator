@@ -4,13 +4,14 @@ namespace KymaSimulator
 {
     internal class Simulator
     {
+        public DataLoggerSimulator DataLogger { get; }
+
         private readonly SerialPort _serialPort;
-        private readonly DataLoggerSimulator _dataLoggerSimulator;
         private int _counterFlag;
 
         public Simulator()
         {
-            _dataLoggerSimulator = new DataLoggerSimulator();
+            DataLogger = new DataLoggerSimulator();
             _serialPort = new SerialPort
             {
                 PortName = "COM4", 
@@ -21,7 +22,7 @@ namespace KymaSimulator
 
         public void Start()
         {
-            _dataLoggerSimulator.Start();
+            DataLogger.Start();
             _serialPort.Open();
         }
 
@@ -48,15 +49,10 @@ namespace KymaSimulator
             if (request.Length < 5) return;
             var requestId = request[2];
 
-            var reply = $"STA{requestId},{_counterFlag},{_dataLoggerSimulator.GetCounterString()}";
+            var reply = $"SAT{requestId}I,{_counterFlag},{DataLogger.GetCounterString()}";
             _serialPort.WriteLine(reply);
             // This is a flag that is 0 first time counter values are requested, and from then on 1 (or was it the other way around...)
             _counterFlag = 1;
-        }
-
-        public string GetCounterValues()
-        {
-            return _dataLoggerSimulator.GetCounterString();
         }
     }
 }
