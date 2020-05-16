@@ -7,7 +7,8 @@ namespace KymaSimulator
         private decimal _actualElapsedMilliseconds;
         private readonly CounterValue[] _counterValues;
         private decimal _intervalElapsedMilliseconds;
-        public long ElapsedMilliseconds => (long) _actualElapsedMilliseconds;  
+        public long ElapsedMilliseconds => UseIntervalTime ? (long)_intervalElapsedMilliseconds : (long)_actualElapsedMilliseconds;
+        public bool UseIntervalTime { get; set; }
 
         public decimal TimeDifference
         {
@@ -38,9 +39,10 @@ namespace KymaSimulator
         {
             _intervalElapsedMilliseconds += (decimal)timerInterval;
             _actualElapsedMilliseconds += elapsedMilliseconds;
+            var elapsed = UseIntervalTime ? (decimal)timerInterval : elapsedMilliseconds;
             foreach (var counterValue in _counterValues)
             {
-                counterValue.UpdateValue(elapsedMilliseconds);
+                counterValue.UpdateValue(elapsed);
             }
         }
 
